@@ -1,16 +1,18 @@
 import { useContext, useState, useEffect } from "react"
 import { useParams, useNavigate } from "react-router-dom"
 import { getHotelsById } from "../services/hotelServices"
-import { BookingContext } from "../context/BookingContext"
 import { AuthContext } from "../context/AuthContext"
+import { createBooking } from "../services/bookingServices"
 
 function Booking() {
+  const [hotel, setHotel] = useState([])
   const { id } = useParams()
   const navigate = useNavigate()
 
-  const hotel = getHotelsById(id)
+  useEffect(() => {
+    getHotelsById(id).then(data => setHotel(data.data))
+  }, [])
 
-  const { addBooking } = useContext(BookingContext)
   const { user } = useContext(AuthContext)
 
   const [checkIn, setCheckIn] = useState("")
@@ -22,7 +24,7 @@ function Booking() {
     }
   }, [user, navigate])
 
-  const handleBooking = (e) => {
+  const handleBooking = async (e) => {
     e.preventDefault()
 
     const newBooking = {
@@ -32,7 +34,7 @@ function Booking() {
       checkOut
     }
 
-    addBooking(newBooking)
+    await createBooking(newBooking)
 
     alert("Booking berhasil!")
 

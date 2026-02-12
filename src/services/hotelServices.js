@@ -1,8 +1,11 @@
-import hotels from "../datas/hotels";
-export const getAllHotels = () => {
-  return hotels
+import api from "./api"
+
+export const getAllHotels = async () => {
+  const res = await api.get("/hotels")
+  return res.data
 }
 
-export const getHotelsById = (id) => {
-  return hotels.find((h) => h.id === Number(id))
+export const getHotelsById = async (id) => {
+  const res = await api.get(`/hotels/${id}`)
+  return res.data
 }

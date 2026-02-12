@@ -1,12 +1,16 @@
-import { useState } from "react";
-import HotelCard from "../components/HotelCards";
+import { useState, useEffect } from "react";
 import { getAllHotels } from "../services/hotelServices";
+import HotelCard from "../components/HotelCards";
 
 function Hotels() {
-  const hotels = getAllHotels()
+  const [hotels, setHotels] = useState([])
   const [search, setSearch] = useState("");
   const [location, setLocation] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
+
+  useEffect(() => {
+    getAllHotels().then(data => setHotels(data.data))
+  }, [])
 
   const fileredHotels = hotels.filter((hotel) => {
     return (
