@@ -24,7 +24,7 @@ function Navbar() {
               <Link to={"/my-bookings"} className="hover:text-blue-600">
                 My Bookings
               </Link>
-              <span className="text-green-600">{user.email}</span>
+              <span className="text-green-600">{user.name}</span>
 
               <button onClick={logout} className="text-red-600 cursor-pointer">
                 Logout

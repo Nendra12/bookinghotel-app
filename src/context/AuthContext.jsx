@@ -5,10 +5,10 @@ export const AuthContext = createContext()
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
 
-  const login = (email) => {
+  const login = (data) => {
     setUser({
-      email: email,
-      name: "Demo User"
+      email: data.email,
+      name: data.name
     })
   }
 

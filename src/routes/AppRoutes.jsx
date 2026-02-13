@@ -5,6 +5,7 @@ import HotelDetail from "../pages/HotelsDetail";
 import Login from "../pages/Login";
 import Booking from "../pages/Booking";
 import MyBookings from "../pages/MyBookings";
+import Register from "../pages/Register";
 
 function AppRoutes() {
   return (
@@ -13,6 +14,7 @@ function AppRoutes() {
       <Route path="/hotels" element={<Hotels />}>Home</Route>
       <Route path="/hotels/:id" element={<HotelDetail />} ></Route>
       <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
 
       <Route path="/booking/:id" element={<Booking />} />
       <Route path="/my-bookings" element={<MyBookings />} />

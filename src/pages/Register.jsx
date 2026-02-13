@@ -1,27 +1,25 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
-import { loginUser } from "../services/authServices";
+import { registerUser } from "../services/authServices";
 
-function Login() {
+function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login } = useContext(AuthContext);
+  const [name, setName] = useState("");
 
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const response = await loginUser({
+    const response = await registerUser({
+      name,
       email,
       password,
     });
 
-    localStorage.setItem("token", response.token)
-    // console.log(response.user)
-    login(response.user)
-    navigate("/");
+    navigate("/login");
   };
 
   return (
@@ -29,6 +27,14 @@ function Login() {
       <h1 className="text-2xl font-bold mb-4">Login</h1>
 
       <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="Name"
+          className="border p-2 w-full mb-4"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+
         <input
           type="email"
           placeholder="Email"
@@ -47,12 +53,12 @@ function Login() {
         />
 
         <button className="bg-blue-600 text-white px-4 py-2 rounded w-full">
-          Login
+          Create
         </button>
-        <Link to={"/register"} className="text-blue-600 ">Create Account</Link>
+        <Link to={"/login"} className="text-blue-600 ">login</Link>
       </form>
     </div>
   );
 }
 
-export default Login;
+export default Register;
