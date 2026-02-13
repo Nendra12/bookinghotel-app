@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { getBookings, removeBooking } from "../services/bookingServices"
+import { formatDate } from "../utilitis/dateFormat"
 
 function MyBookings() {
   const [ bookings, setBookings ] = useState([])
@@ -25,9 +26,9 @@ function MyBookings() {
 
       {bookings.map((booking) => (
         <div key={booking.id} id={booking.id} className="border p-4 mb-4 rounded">
-          <h2 className="font-bold">{booking.hotelName}</h2>
-          <p>Check In: {booking.checkIn}</p>
-          <p>Check Out: {booking.checkOut}</p>
+          <h2 className="font-bold">{booking.hote_name}</h2>
+          <p>Check In: {formatDate(booking.check_in)}</p>
+          <p>Check Out: {formatDate(booking.check_out)}</p>
 
           <button
             onClick={() => handleRemove(booking.id)}

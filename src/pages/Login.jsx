@@ -1,20 +1,28 @@
-import { useContext, useState } from "react"
-import { AuthContext } from "../context/AuthContext"
-import { useNavigate } from "react-router-dom"
+import { useContext, useState } from "react";
+import { AuthContext } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { loginUser } from "../services/authServices";
 
 function Login() {
-  const [email, setEmail] = useState("")
-  const { login } = useContext(AuthContext)
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { login } = useContext(AuthContext);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    login(email)
+    const response = await loginUser({
+      email,
+      password,
+    });
 
-    navigate("/")
-  }
+    localStorage.setItem("token", response.token)
+
+    login(response.user)
+    navigate("/");
+  };
 
   return (
     <div className="max-w-md mx-auto bg-white p-6 rounded shadow">
@@ -29,12 +37,21 @@ function Login() {
           onChange={(e) => setEmail(e.target.value)}
         />
 
+        <input
+          type="password"
+          id="passwordField"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="border p-2 w-full mb-4"
+        />
+
         <button className="bg-blue-600 text-white px-4 py-2 rounded w-full">
           Login
         </button>
       </form>
     </div>
-  )
+  );
 }
 
-export default Login
+export default Login;
